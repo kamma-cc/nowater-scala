@@ -5,17 +5,17 @@ package object nowaterscala {
 
   def expand(d: Definitions): Definitions = {
 
-    def noMixin(d: Definitions): Boolean = {
+    def noMixin(d: Definitions): Boolean =
       d.forall {
         case (key, value) => value.forall {
           case (innerKey, _) => innerKey != "mixin"
         }
       }
-    }
+
 
     if (noMixin(d))
       d
-    else {
+    else
       expand(d.map {
         case (key, value) =>
           val newValue: Seq[(String, String)] = value.flatMap {
@@ -24,9 +24,6 @@ package object nowaterscala {
           }
           (key, newValue)
       })
-    }
-
-
   }
 
 }
